@@ -5,4 +5,7 @@
 	<flip>0</flip>
 	<near>234.68</near>
 	<far>255</far>
+	<min_area>98.175</min_area>
+	<max_area>408.49</max_area>
+	<tracking_thresh>33.175</tracking_thresh>
 </group>

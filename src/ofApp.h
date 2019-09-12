@@ -46,9 +46,14 @@ class ofApp : public ofBaseApp{
     ofParameter<bool> bTracking;
     ofParameter<float> near;
     ofParameter<float> far;
-
     
-        ofxCvGrayscaleImage grayImg;
+    ofParameter<float> minAreaRadius;
+    ofParameter<float> maxAreaRadius;
+    ofParameter<float> trackingThreshold;
+//    ofParameter<float> maxDistance;
+//    ofParameter<float> trackingPersistence;
+    
+    ofxCvGrayscaleImage grayImg;
     
     ofxOpenNIContext    recordContext, playContext;
     
@@ -65,4 +70,23 @@ class ofApp : public ofBaseApp{
     ofPixels previous;
     ofImage diff;
     cv::Mat columnMean;
+    
+    
+    ofxCv::ContourFinder contourFinder;
+    ofxCv::ContourFinder contourFinderTgtColor;
+    
+    
+    
+    
+    
+
+    
+//    ofParameter<bool> bThreshWithOpenCV;
+//    ofParameter<bool> bFlip;
+//
+//
+//    ofParameter<int> nearThreshold;
+//    ofParameter<int> farThreshold;
+
+
 };

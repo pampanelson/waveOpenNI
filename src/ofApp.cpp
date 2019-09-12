@@ -37,6 +37,12 @@ void ofApp::setup(){
     gui.add(near.set("near",0,1,255));
     gui.add(far.set("far",0,1,255));
 
+    
+    gui.add(minAreaRadius.set("min area",1,1,300));
+    gui.add(maxAreaRadius.set("max area",10,1,800));
+    gui.add(trackingThreshold.set("tracking thresh",1,1,100));
+    
+    
     if (!ofFile("settings.xml"))
         gui.saveToFile("settings.xml");
     
@@ -94,6 +100,7 @@ void ofApp::update(){
         
         
     }
+    grayImg.blur();
 
     grayImg.flagImageChanged();
 
@@ -106,6 +113,14 @@ void ofApp::update(){
     
     // this is the key line: get the average of each column
     columnMean = meanCols(diff);
+    
+    
+    contourFinder.setMinAreaRadius(minAreaRadius);
+    contourFinder.setMaxAreaRadius(maxAreaRadius);
+    contourFinder.setThreshold(trackingThreshold);
+    
+    
+    contourFinder.findContours(grayImg);
     
     
     if(bSendingOSC){
@@ -220,15 +235,17 @@ void ofApp::draw(){
     }
     
     
-    ofTranslate(640, 0);
+    
     ofSetColor(255);
 
-    grayImg.draw(0,0,640,480);
-    diff.draw(0,0);
-    ofTranslate(-640, 0);
+    grayImg.draw(640,0,640,480);
+    diff.draw(0,480);
     
     
-    ofSetColor(255);
+    ofTranslate(640, 480);
+    contourFinder.draw();
+    ofTranslate(-640,-480);
+    
     
     gui.draw();
 }
