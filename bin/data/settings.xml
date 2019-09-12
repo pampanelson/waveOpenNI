@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <group>
-	<Sending_osc>0</Sending_osc>
+	<Sending_osc>1</Sending_osc>
 	<Tracking>0</Tracking>
 	<flip>0</flip>
+	<near>234.68</near>
+	<far>255</far>
 </group>

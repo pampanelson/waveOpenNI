@@ -44,7 +44,9 @@ class ofApp : public ofBaseApp{
     ofxPanel gui;
     ofParameter<bool> bSendingOSC;
     ofParameter<bool> bTracking;
-    
+    ofParameter<float> near;
+    ofParameter<float> far;
+
     
         ofxCvGrayscaleImage grayImg;
     

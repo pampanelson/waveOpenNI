@@ -29,8 +29,9 @@ void ofApp::setup(){
     gui.setup();
     gui.add(bSendingOSC.set("Sending osc",false));
     gui.add(bTracking.set("Tracking",false));
-    
-    
+    gui.add(near.set("near",0,1,255));
+    gui.add(far.set("far",0,1,255));
+
     if (!ofFile("settings.xml"))
         gui.saveToFile("settings.xml");
     
@@ -73,6 +74,14 @@ void ofApp::update(){
             int y = j;
             ofColor c = recordDepth.getPixelColor(x, y);
             
+            if(c[1] > far){
+                c[1] = 0;
+            }
+            else if(c[1] < near){
+                c[1] = 0;
+            }else{
+                //c[1] = 255;
+            }
             pix[j*640 + i] = c[1];
             
         }
@@ -135,7 +144,6 @@ void ofApp::draw(){
     //    grayImg.draw(640,0,640,480);
     recordUser.draw();
     
-    grayImg.draw(640,0,640,480);
     if(recordUser.getNumberOfTrackedUsers() > 0){
         
         
@@ -196,6 +204,12 @@ void ofApp::draw(){
     }
     
     
+    ofTranslate(640, 0);
+    ofSetColor(255);
+
+    grayImg.draw(0,0,640,480);
+
+    ofTranslate(-640, 0);
     
     
     ofSetColor(255);
