@@ -7,6 +7,8 @@ void ofApp::setup(){
     
     sender.setup(HOST, PORT);
     
+    grayImg.allocate(640,480);
+    
     
     filterFactor = 0.1f;
     
@@ -56,6 +58,31 @@ void ofApp::update(){
     recordDepth.update();
     recordUser.update();
     
+    
+//    ofColor c = recordDepth.getPixelColor(100, 200);
+//    cout << ofToString(c) << endl;
+//    0, 108, 255, 255  // color info save in to c[1]
+//
+//
+    ofPixels & pix = grayImg.getPixels();
+
+    
+    for (int i = 0; i < 640; i++) {
+        for (int j = 0; j < 480; j++) {
+            int x = i;
+            int y = j;
+            ofColor c = recordDepth.getPixelColor(x, y);
+            
+            pix[j*640 + i] = c[1];
+            
+        }
+        
+        
+        
+    }
+
+    grayImg.flagImageChanged();
+
     if(bSendingOSC){
         // prepare data for osc send ----------------------------------------
         
@@ -108,6 +135,7 @@ void ofApp::draw(){
     //    grayImg.draw(640,0,640,480);
     recordUser.draw();
     
+    grayImg.draw(640,0,640,480);
     if(recordUser.getNumberOfTrackedUsers() > 0){
         
         
