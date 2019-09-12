@@ -61,4 +61,8 @@ class ofApp : public ofBaseApp{
     
     int trackingDataSize;
     vector<float> trackingData;
+    
+    ofPixels previous;
+    ofImage diff;
+    cv::Mat columnMean;
 };

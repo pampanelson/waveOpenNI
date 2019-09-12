@@ -1,5 +1,8 @@
 #include "ofApp.h"
 
+using namespace ofxCv;
+using namespace cv;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(30); // run at 60 fps
@@ -8,6 +11,8 @@ void ofApp::setup(){
     sender.setup(HOST, PORT);
     
     grayImg.allocate(640,480);
+    imitate(previous,grayImg);
+    imitate(diff,grayImg);
     
     
     filterFactor = 0.1f;
@@ -92,6 +97,17 @@ void ofApp::update(){
 
     grayImg.flagImageChanged();
 
+    
+    absdiff(grayImg, previous, diff);
+    diff.update();
+    
+    // like ofSetPixels, but more concise and cross-toolkit
+    copy(grayImg, previous);
+    
+    // this is the key line: get the average of each column
+    columnMean = meanCols(diff);
+    
+    
     if(bSendingOSC){
         // prepare data for osc send ----------------------------------------
         
@@ -208,7 +224,7 @@ void ofApp::draw(){
     ofSetColor(255);
 
     grayImg.draw(0,0,640,480);
-
+    diff.draw(0,0);
     ofTranslate(-640, 0);
     
     
